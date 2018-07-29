@@ -117,5 +117,56 @@ namespace ProductCatalogApi.Controllers
             var model = new PaginatedItemsViewModel<CatalogItem>(pageIndex, pageSize, totalItems, itemsOnPage);
             return Ok(model);
         }
+
+        [HttpPost]
+        [Route("items")]
+        public async Task<IActionResult> CreateProduct([FromBody] CatalogItem product)
+        {
+            var item = new CatalogItem
+            {
+                CatalogBrandId = product.CatalogBrandId,
+                CatalogTypeId = product.CatalogTypeId,
+                Description = product.Description,
+                Name = product.Name,
+                PictureFileName = product.PictureFileName,
+                Price = product.Price
+            };
+            _catalogContext.CatalogItems.Add(item);
+            await _catalogContext.SaveChangesAsync();
+            return CreatedAtAction(nameof(GetItemById), new { id = item.Id });
+        }
+
+        [HttpPut]
+        [Route("items")]
+        public async Task<IActionResult> UpdateProduct([FromBody] CatalogItem productToUpdate)
+        {
+            var catalogItem = await _catalogContext.CatalogItems
+                              .SingleOrDefaultAsync(i => i.Id == productToUpdate.Id);
+            if (catalogItem == null)
+            {
+                return NotFound(new { Message = $"Item with id {productToUpdate.Id} not found." });
+            }
+            catalogItem = productToUpdate;
+            _catalogContext.CatalogItems.Update(catalogItem);
+            await _catalogContext.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetItemById), new { id = productToUpdate.Id });
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            var product = await _catalogContext.CatalogItems.SingleOrDefaultAsync(p => p.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+
+            }
+            _catalogContext.CatalogItems.Remove(product);
+            await _catalogContext.SaveChangesAsync();
+            return NoContent();
+
+        }
     }
 }
