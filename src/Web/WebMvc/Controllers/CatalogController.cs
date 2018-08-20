@@ -8,7 +8,7 @@ using WebMvc.Models;
 
 namespace WebMvc.Controllers
 {
-    public class HomeController : Controller
+    public class CatalogController : Controller
     {
         public IActionResult Index()
         {
