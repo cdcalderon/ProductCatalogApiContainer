@@ -32,6 +32,8 @@ namespace InvestipsProductsContainer.WebMvc
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.Configure<AppSettings>(Configuration);
+
+            // test
             services.AddSingleton<IHttpClient, CustomHttpClient>();
             services.AddTransient<ICatalogService, CatalogService>();
 
