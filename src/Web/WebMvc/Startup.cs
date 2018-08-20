@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using InvestipsProductsContainer.WebMvc.Infrastructure;
+using InvestipsProductsContainer.WebMvc.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,7 @@ namespace InvestipsProductsContainer.WebMvc
             });
             services.Configure<AppSettings>(Configuration);
             services.AddSingleton<IHttpClient, CustomHttpClient>();
+            services.AddTransient<ICatalogService, CatalogService>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
