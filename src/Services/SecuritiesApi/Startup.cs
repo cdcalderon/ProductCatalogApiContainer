@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using SecuritiesApi.Data;
 
 namespace SecuritiesApi
 {
@@ -24,6 +26,13 @@ namespace SecuritiesApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //var server = Configuration["DatabaseServer"];
+            //var database = Configuration["DatabaseName"];
+            //var user = Configuration["DatabaseUser"];
+            //var password = Configuration["DatabaseUserPassword"];
+            //var connectionString = $"Server={server};Database={database};User={user};Password={password};";
+            //services.AddDbContext<FinanceSecurityContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<FinanceSecurityContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
