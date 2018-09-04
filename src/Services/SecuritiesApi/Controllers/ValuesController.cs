@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SecuritiesApi.Abstractions;
 
 namespace SecuritiesApi.Controllers
 {
@@ -12,7 +14,7 @@ namespace SecuritiesApi.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
             return new string[] { "value1", "value2" };
         }
