@@ -9,6 +9,6 @@ namespace SecuritiesApi.DTO
     {
         public int StartIndex { get; set; }
         public int EndIndex { get; set; }
-        public IEnumerable<double> Macds { get; set; }
+        public double[] Macds { get; set; }
     }
 }

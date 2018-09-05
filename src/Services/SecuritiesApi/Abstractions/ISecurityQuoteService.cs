@@ -16,5 +16,12 @@ namespace SecuritiesApi.Abstractions
 
         MacdInfo GetMACD(IEnumerable<Candle> historicalQuotes);
         IEnumerable<Stock> GetStocksWithMacds(IEnumerable<Candle> historicalQuotes, MacdInfo macdInfo);
+
+        StochasticsInfo GetStochastics(IEnumerable<Candle> historicalQuotes);
+        IEnumerable<Stock> GetStocksWithStochastics(IEnumerable<Candle> historicalQuotes,
+            StochasticsInfo stochasticsInfoInfo);
+
+        IEnumerable<Stock> SetStockIndicatorsForSignals(IEnumerable<Candle> historicalQuotes);
+
     }
 }

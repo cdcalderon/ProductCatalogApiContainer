@@ -41,15 +41,8 @@ namespace SecuritiesApi.Controllers
         public async Task<IActionResult> StocksWithAvgs()
         {
             var quotes = await _securityQuoteService.GetQuotes("AAPL", new DateTime(2017, 1, 1), DateTime.Now);
-            var movingAvgs10 = _securityQuoteService.GetMovingAveragesByPeriod(quotes, 10);
-
-            var stocksWithAvgs10 = _securityQuoteService.GetStocksWithMovingAvg10(quotes, movingAvgs10);
-
-
-            var macds = _securityQuoteService.GetMACD(quotes);
-            var stocksWithMacds = _securityQuoteService.GetStocksWithMacds(quotes, macds);
-
-            return Ok(stocksWithAvgs10);
+            var stocks = _securityQuoteService.SetStockIndicatorsForSignals(quotes);
+            return Ok(stocks);
         }
 
         [HttpGet]

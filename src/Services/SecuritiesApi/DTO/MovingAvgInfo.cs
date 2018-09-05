@@ -10,6 +10,6 @@ namespace SecuritiesApi.DTO
         public int StartIndex { get; set; }
         public int EndIndex { get; set; }
         public int Period { get; set; }
-        public IEnumerable<double> MovingAverages { get; set; }
+        public double[] MovingAverages { get; set; }
     }
 }

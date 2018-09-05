@@ -19,6 +19,8 @@ namespace SecuritiesApi.Domain
         public decimal AverageVolume30 { get; set; }
         public decimal MarketCap { get; set; }
         public decimal MovingAverage10 { get; set; }
+        public decimal Macd8179 { get; set; }
+        public decimal StochasticsSlowK1450 { get; set; }
         public int ExchangeId { get; set; }
 
         // Navigation properties
