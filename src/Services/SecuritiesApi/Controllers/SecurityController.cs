@@ -38,11 +38,18 @@ namespace SecuritiesApi.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<IActionResult> StocksWithAvgs()
+        public async Task<IActionResult> PopulateStocks()
         {
-            var quotes = await _securityQuoteService.GetQuotes("AAPL", new DateTime(2017, 1, 1), DateTime.Now);
-            var stocks = _securityQuoteService.SetStockIndicatorsForSignals(quotes);
-            return Ok(stocks);
+            var stocks = await _securityContext.Stocks.ToListAsync();
+
+            foreach (var stock in stocks)
+            {
+                var quotes = await _securityQuoteService.GetQuotes(stock.Symbol, new DateTime(2017, 1, 1), DateTime.Now);
+                var stocksQuotes = _securityQuoteService.SetStockIndicatorsForSignals(quotes);
+
+            }
+            
+            return Ok("Done");
         }
 
         [HttpGet]
