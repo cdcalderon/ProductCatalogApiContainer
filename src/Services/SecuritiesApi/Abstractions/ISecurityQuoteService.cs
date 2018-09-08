@@ -10,11 +10,12 @@ namespace SecuritiesApi.Abstractions
 {
     public interface ISecurityQuoteService
     {
-        Task<IEnumerable<Stock>> GetStocks();
+        Task<IEnumerable<Domain.Stock>> GetStocks();
+        Task AddStock(DTO.Stock stockDto);
         Task<IReadOnlyList<Candle>> GetQuotes(string symbol, DateTime from, DateTime to);
         MovingAvgInfo GetMovingAveragesByPeriod(IEnumerable<Candle> historicalQuotes, int period);
         MacdInfo GetMACD(IEnumerable<Candle> historicalQuotes);
         StochasticsInfo GetStochastics(IEnumerable<Candle> historicalQuotes);
-        void AddQuotesToStock(IEnumerable<Candle> historicalQuotes, Stock stock);
+        void AddQuotesToStock(IEnumerable<Candle> historicalQuotes, Domain.Stock stock);
     }
 }

@@ -28,9 +28,21 @@ namespace SecuritiesApi.Services
             return await Yahoo.GetHistoricalAsync(symbol,from , to, Period.Daily);
         }
 
-        public async Task<IEnumerable<Stock>> GetStocks()
+        public async Task<IEnumerable<Domain.Stock>> GetStocks()
         {
             return await _financeSecurityContext.Stocks.ToListAsync();
+        }
+
+        public async Task AddStock(DTO.Stock stockDto)
+        {
+            var stock = new Domain.Stock()
+            {
+                Symbol = stockDto.Symbol,
+                Company = stockDto.Company,
+                ExchangeId = stockDto.ExchangeId
+            };
+             _financeSecurityContext.Stocks.Add(stock);
+            await _financeSecurityContext.SaveChangesAsync();
         }
 
         public MovingAvgInfo GetMovingAveragesByPeriod(IEnumerable<Candle> historicalQuotes, int period)
@@ -101,7 +113,7 @@ namespace SecuritiesApi.Services
         }
 
         
-        public void AddQuotesToStock(IEnumerable<Candle> historicalQuotes, Stock stock)
+        public void AddQuotesToStock(IEnumerable<Candle> historicalQuotes, Domain.Stock stock)
         {
             var mvAvgs10Info = this.GetMovingAveragesByPeriod(historicalQuotes, 10);
             var macdsInfo = this.GetMACD(historicalQuotes);

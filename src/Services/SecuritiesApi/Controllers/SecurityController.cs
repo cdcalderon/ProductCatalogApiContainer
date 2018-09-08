@@ -26,7 +26,7 @@ namespace SecuritiesApi.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        public async Task<IActionResult> Stocks()
+        public async Task<IActionResult> GetStocks()
         {
             var items = await _securityQuoteService.GetStocks();
             return Ok(items);
@@ -47,12 +47,6 @@ namespace SecuritiesApi.Controllers
             return Ok("Done");
         }
 
-        [HttpGet]
-        [Route("[action]")]
-        public async Task<IActionResult> MutuaFunds()
-        {
-            var items = await _securityContext.MutualFunds.ToListAsync();
-            return Ok(items);
-        }
+        
     }
 }
