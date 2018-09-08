@@ -10,6 +10,7 @@ namespace SecuritiesApi.Abstractions
 {
     public interface ISecurityQuoteService
     {
+        Task<IEnumerable<Stock>> GetStocks();
         Task<IReadOnlyList<Candle>> GetQuotes(string symbol, DateTime from, DateTime to);
         MovingAvgInfo GetMovingAveragesByPeriod(IEnumerable<Candle> historicalQuotes, int period);
         MacdInfo GetMACD(IEnumerable<Candle> historicalQuotes);

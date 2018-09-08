@@ -17,22 +17,18 @@ namespace SecuritiesApi.Controllers
     public class SecurityController : ControllerBase
     {
         public readonly ISecurityQuoteService _securityQuoteService;
-        private readonly FinanceSecurityContext _securityContext;
         private readonly IOptionsSnapshot<FinanceSecuritiesSettings> _settings;
-        public SecurityController(FinanceSecurityContext catalogContext, 
-            IOptionsSnapshot<FinanceSecuritiesSettings> settings, ISecurityQuoteService securityQuoteService)
+        public SecurityController(IOptionsSnapshot<FinanceSecuritiesSettings> settings, ISecurityQuoteService securityQuoteService)
         {
-            _securityContext = catalogContext;
             _settings = settings;
             _securityQuoteService = securityQuoteService;
-            ((DbContext)catalogContext).ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
 
         [HttpGet]
         [Route("[action]")]
         public async Task<IActionResult> Stocks()
         {
-            var items = await _securityContext.Stocks.ToListAsync();
+            var items = await _securityQuoteService.GetStocks();
             return Ok(items);
         }
 
@@ -40,7 +36,7 @@ namespace SecuritiesApi.Controllers
         [Route("[action]")]
         public async Task<IActionResult> PopulateStocks()
         {
-            var stocks = await _securityContext.Stocks.ToListAsync();
+            var stocks = await _securityQuoteService.GetStocks();
 
             foreach (var stock in stocks)
             {

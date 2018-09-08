@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SecuritiesApi.Abstractions;
+using SecuritiesApi.Data;
 using SecuritiesApi.Domain;
 using SecuritiesApi.DTO;
 using TicTacTec.TA.Library;
@@ -12,10 +15,24 @@ namespace SecuritiesApi.Services
 {
     public class SecurityQuoteService: ISecurityQuoteService
     {
+        private readonly FinanceSecurityContext _financeSecurityContext;
+
+        public SecurityQuoteService(FinanceSecurityContext financeSecurityContext)
+        {
+            _financeSecurityContext = financeSecurityContext;
+            ((DbContext)financeSecurityContext).ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        }
+
         public async Task<IReadOnlyList<Candle>> GetQuotes(string symbol, DateTime from, DateTime to)
         {
             return await Yahoo.GetHistoricalAsync(symbol,from , to, Period.Daily);
         }
+
+        public async Task<IEnumerable<Stock>> GetStocks()
+        {
+            return await _financeSecurityContext.Stocks.ToListAsync();
+        }
+
         public MovingAvgInfo GetMovingAveragesByPeriod(IEnumerable<Candle> historicalQuotes, int period)
         {
             int outBegIndex = 0;
