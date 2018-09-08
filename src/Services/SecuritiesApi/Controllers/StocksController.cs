@@ -22,10 +22,10 @@ namespace SecuritiesApi.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> AddStock(Stock stock)
+        public async Task<IActionResult> AddStock([FromBody]Stock stock)
         {
-            var items = await _securityQuoteService.GetStocks();
-            return Ok(items);
+            await _securityQuoteService.AddStock(stock);
+            return Ok("ok");
         }
     }
 }
