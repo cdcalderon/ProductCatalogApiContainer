@@ -12,16 +12,8 @@ namespace SecuritiesApi.Abstractions
     {
         Task<IReadOnlyList<Candle>> GetQuotes(string symbol, DateTime from, DateTime to);
         MovingAvgInfo GetMovingAveragesByPeriod(IEnumerable<Candle> historicalQuotes, int period);
-        IEnumerable<Stock> GetStocksWithMovingAvg10(IEnumerable<Candle> historicalQuotes, MovingAvgInfo movingAvgInfo);
-
         MacdInfo GetMACD(IEnumerable<Candle> historicalQuotes);
-        IEnumerable<Stock> GetStocksWithMacds(IEnumerable<Candle> historicalQuotes, MacdInfo macdInfo);
-
         StochasticsInfo GetStochastics(IEnumerable<Candle> historicalQuotes);
-        IEnumerable<Stock> GetStocksWithStochastics(IEnumerable<Candle> historicalQuotes,
-            StochasticsInfo stochasticsInfoInfo);
-
-        IEnumerable<Stock> SetStockIndicatorsForSignals(IEnumerable<Candle> historicalQuotes);
-
+        void AddQuotesToStock(IEnumerable<Candle> historicalQuotes, Stock stock);
     }
 }

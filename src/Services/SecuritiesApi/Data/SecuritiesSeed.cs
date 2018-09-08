@@ -38,7 +38,7 @@ namespace SecuritiesApi.Data
         {
             return new List<Security>()
             {
-                new Stock(){ Symbol = "AAPL", Change = 5.5m, Last = 100m, Company = "Apple Inc", DayHigh = 102m, DayLow = 99m, ExchangeId = 1 },
+                new Stock(){ Symbol = "AAPL", Company = "Apple Inc" ,ExchangeId = 1 },
                 new MutualFund(){ Symbol = "MGF",MorningStarRating = 2}
             };
         }

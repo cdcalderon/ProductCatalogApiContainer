@@ -5,8 +5,7 @@ using System.Threading.Tasks;
 
 namespace SecuritiesApi.Domain
 {
-    public class QuoteSignal: Stock
+    public class Signal
     {
-        
     }
 }
