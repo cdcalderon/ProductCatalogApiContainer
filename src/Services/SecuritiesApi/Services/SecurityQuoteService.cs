@@ -33,6 +33,11 @@ namespace SecuritiesApi.Services
             return await _financeSecurityContext.Stocks.ToListAsync();
         }
 
+        public async Task<IEnumerable<Domain.Exchange>> GetExchanges()
+        {
+            return await _financeSecurityContext.Exchanges.ToListAsync();
+        }
+
         public async Task AddStock(DTO.Stock stockDto)
         {
             var stock = new Domain.Stock()

@@ -17,5 +17,6 @@ namespace SecuritiesApi.Abstractions
         MacdInfo GetMACD(IEnumerable<Candle> historicalQuotes);
         StochasticsInfo GetStochastics(IEnumerable<Candle> historicalQuotes);
         void AddQuotesToStock(IEnumerable<Candle> historicalQuotes, Domain.Stock stock);
+        Task<IEnumerable<Domain.Exchange>> GetExchanges();
     }
 }

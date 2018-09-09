@@ -16,7 +16,7 @@ namespace SecuritiesApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value1", "value2", "value3", "value44-Test", "99" };
         }
 
         // GET api/values/5

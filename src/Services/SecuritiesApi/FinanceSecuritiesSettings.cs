@@ -8,5 +8,6 @@ namespace SecuritiesApi
     public class FinanceSecuritiesSettings
     {
         public string ExternalCatalogBaseUrl { get; set; }
+        public string AzureDbConnection { get; set; }
     }
 }

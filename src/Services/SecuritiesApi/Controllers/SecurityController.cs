@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Options;
 using SecuritiesApi.Abstractions;
 using SecuritiesApi.Data;
@@ -17,10 +18,10 @@ namespace SecuritiesApi.Controllers
     public class SecurityController : ControllerBase
     {
         public readonly ISecurityQuoteService _securityQuoteService;
-        private readonly IOptionsSnapshot<FinanceSecuritiesSettings> _settings;
+        private readonly FinanceSecuritiesSettings _settings;
         public SecurityController(IOptionsSnapshot<FinanceSecuritiesSettings> settings, ISecurityQuoteService securityQuoteService)
         {
-            _settings = settings;
+            _settings = settings.Value;
             _securityQuoteService = securityQuoteService;
         }
 
@@ -28,8 +29,41 @@ namespace SecuritiesApi.Controllers
         [Route("[action]")]
         public async Task<IActionResult> GetStocks()
         {
-            var items = await _securityQuoteService.GetStocks();
-            return Ok(items);
+            try
+            {
+                var items = await _securityQuoteService.GetStocks();
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+           
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> GetExchanges()
+        {
+            try
+            {
+                var items = await _securityQuoteService.GetExchanges();
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e);
+            }
+
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public IEnumerable<string> GetValues()
+        {
+            return new string[] { "value1", "value2", "value3", "value4", _settings.AzureDbConnection };
         }
 
         [HttpGet]

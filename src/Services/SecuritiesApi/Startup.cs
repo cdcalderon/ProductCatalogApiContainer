@@ -30,14 +30,18 @@ namespace SecuritiesApi
         {
             services.Configure<FinanceSecuritiesSettings>(Configuration);
 
-            //var server = Configuration["DatabaseServer"];
-            //var database = Configuration["DatabaseName"];
-            //var user = Configuration["DatabaseUser"];
-            //var password = Configuration["DatabaseUserPassword"];
-            //var connectionString = $"Server={server};Database={database};User={user};Password={password};";
-            //services.AddDbContext<FinanceSecurityContext>(options => options.UseSqlServer(connectionString));
+            var server = Configuration["DatabaseServer"];
+            var database = Configuration["DatabaseName"];
+            var user = Configuration["DatabaseUser"];
+            var password = Configuration["DatabaseUserPassword"];
+            var connectionString = $"Server={server};Database={database};User={user};Password={password};";
+            // var connectionStringAzure =
+            //     $"Server={server},1433;Initial Catalog={database};Persist Security Info=False;User ID={user};Password={password};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            // services.AddDbContext<FinanceSecurityContext>(options => options.UseSqlServer(connectionStringAzure));
+               services.AddDbContext<FinanceSecurityContext>(options => options.UseSqlServer(Configuration["AzureDbConnection"]));   /// (not using Docker) uncomment if want to run from VS locally
+            
             services.AddScoped<ISecurityQuoteService, SecurityQuoteService>();
-            services.AddDbContext<FinanceSecurityContext>(options => options.UseSqlServer(Configuration["ConnectionString"]));
+           
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
